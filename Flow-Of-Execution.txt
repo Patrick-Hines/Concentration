@@ -1,0 +1,53 @@
+Concentration Game Flow of Execution:
+
+Card Class:
+	-This class is only here to repaint panels. That's all.
+		Defaults: 
+			flipped = false; //Show image when true
+			matched = false; //Show Dark Blue when true
+			active = false; //Show Gray when false, blue if true
+
+
+
+Base Program:
+
+	1. "New Game" is clicked 
+			-Sends the proper dimensions to CardPanel
+			-Make CardPanel draw up the appropriate images
+
+	2. CardPanel reads the dimensions and pulls in the appropriate amount of images
+		-Test point: System.out the resulting imagepaths
+
+	3. CardPanel shuffles these images
+		-Test point: System.out the resulting imagepaths
+
+	4. CardPanel sets those images to the cards within the dimensions, then marks them as "active = true"
+
+	5. On panel click (All done in Card Panel), set the flipped property to "true" and "flippedCards" to "+1" and "cardReference1" to the clicked card.
+
+	6. On second panel click, set flipped property to "true" and "flippedCards" to "+1" and "cardReference2" to the clicked card
+
+	7. If "flippedCards" = 2, then send both "cardReference" object to compareCards() method in CardPanel.
+		-Returns Boolean
+		-compareCards is called as the condition statement for an if() within the actionPerformed of the card clicking ActionListener
+			-If true, then set both cards to "matched = true" and check to see if any other cards are "matched = false"
+				-If no other cards are "matched = false", then the game is over.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Test Method:
+
+public void test(String input) {
+	System.out.println(input);
+}
