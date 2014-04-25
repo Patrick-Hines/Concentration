@@ -5,6 +5,10 @@
  */
 package majprog3spr2014;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -13,15 +17,67 @@ import javax.swing.JPanel;
  */
 public class Card extends JPanel {
 
-	//Create class properties
+    //Create class properties
+    private boolean flipped;
+    private boolean matched;
+    private boolean active;
 
-	//Make Constructor
+    private String imageFilePath;
 
-	//Method for setting card image
+    JLabel imageLbl;
 
-	//Method for getting card image
+    ImageIcon image;
 
-	//Repaint method
+    //Make Constructor
+    public Card() {
+
+        flipped = active = matched = false;
+
+        imageLbl = new JLabel();
+
+    }
+
+    //Repaint method
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        //Check if card is active or not
+        if (active) {
+            g.setColor(Color.BLUE);
+            g.drawRect(0, 0, 64, 64);
+
+            //Check if flipped or not
+            if (flipped) {
+
+                //Set the icon to the JLabel
+                super.paintComponent(g);
+                imageLbl.setIcon(image);
+
+                //Check if matched or not
+                if (matched) {
+                    super.paintComponent(g);
+                    g.setColor(Color.GREEN);
+                    g.drawRect(0, 0, 64, 64);
+                }
+            }
+
+        } else { //Means that the card is disabled
+            g.setColor(Color.GRAY);
+            g.drawRect(0, 0, 64, 64);
+        }
+
+    }
+
+    /**
+     *
+     * @param filepath Sets the image to the Card object.
+     */
+    public void setImage(String filepath) {
+        image = new ImageIcon(filepath);
+
+    }
+
 
     /**
      *
@@ -30,4 +86,54 @@ public class Card extends JPanel {
     static public void test(String input) {
         System.out.println(input);
     }
+
+    /**
+     * @return the flipped
+     */
+    public boolean isFlipped() {
+        return flipped;
+    }
+
+    /**
+     * @param flipped the flipped to set
+     */
+    public void setFlipped(boolean flipped) {
+        this.flipped = flipped;
+    }
+
+    /**
+     * @return the matched
+     */
+    public boolean isMatched() {
+        return matched;
+    }
+
+    /**
+     * @param matched the matched to set
+     */
+    public void setMatched(boolean matched) {
+        this.matched = matched;
+    }
+
+    /**
+     * @return the active
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
+     * @param active the active to set
+     */
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    /**
+     * @return the imageFilePath
+     */
+    public String getImageFilePath() {
+        return imageFilePath;
+    }
+
 }

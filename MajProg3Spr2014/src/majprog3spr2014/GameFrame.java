@@ -8,6 +8,8 @@ package majprog3spr2014;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -97,6 +99,27 @@ public class GameFrame extends JFrame {
     }
 
     //TODO: Add inner class for button listeners.
+    private class ButtonListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent eventObject) {
+
+            JButton referenceBtn = (JButton) eventObject.getSource();
+
+            String referenceText = referenceBtn.getText();
+
+            if (referenceText.equalsIgnoreCase("Close Window")) {
+                System.exit(0);
+
+            } else if (referenceText.equalsIgnoreCase("New Game")) {
+    			//Send dimensions over to gameboard object based on the levelSelectionCBox choice.
+
+            }
+
+        }
+
+    }
+
     /**
      *
      * @param input Simple method to test output during development
