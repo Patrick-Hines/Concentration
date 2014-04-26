@@ -16,8 +16,8 @@ public class CardPanel extends JPanel {
 
     //Declare class properties
     Card[][] cards;
-    int rows;
-    int cols;
+    private int rows;
+    private int cols;
 
     //Constructor
     public CardPanel() {
@@ -42,7 +42,7 @@ public class CardPanel extends JPanel {
 
     }
 
-       //Method to pull in image filepaths based on dimensions
+    //Method to pull in image filepaths based on dimensions
     //shuffle deck
     //Method to switch on the active cards based on dimensions given by GamePanel
     //Inner class for panel clicks
@@ -62,5 +62,33 @@ public class CardPanel extends JPanel {
      */
     static public void test(String input) {
         System.out.println(input);
+    }
+
+    /**
+     * @return the rows
+     */
+    public int getRows() {
+        return rows;
+    }
+
+    /**
+     * @param rows the rows to set
+     */
+    public void setRows(int rows) {
+        this.rows = rows;
+    }
+
+    /**
+     * @return the cols
+     */
+    public int getCols() {
+        return cols;
+    }
+
+    /**
+     * @param cols the cols to set
+     */
+    public void setCols(int cols) {
+        this.cols = cols;
     }
 }
