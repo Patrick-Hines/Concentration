@@ -42,7 +42,13 @@ public class GameFrame extends JFrame {
     JButton newGameBtn;
     JButton closeBtn;
 
+    int userRows;
+    int userCols;
+
     public GameFrame() {
+
+        userRows = 2;
+        userCols = 3;
 
         //Instantiate all components
         turnLbl = new JLabel("Turn: ");
@@ -60,7 +66,14 @@ public class GameFrame extends JFrame {
 
         gameboard = new CardPanel();
 
-        levelSelectionCBox = new JComboBox();
+        //Queue in the options for levelSelection
+        String[] tempLevel = new String[6];
+        for (int i = 0; i < 6; i++) {
+            tempLevel[i] = "Level " + (i + 1);
+        }
+
+        levelSelectionCBox = new JComboBox(tempLevel);
+        levelSelectionCBox.addActionListener(new LevelListener());
 
         newGameBtn = new JButton("New Game");
         closeBtn = new JButton("Close Window");
@@ -116,11 +129,45 @@ public class GameFrame extends JFrame {
 
             } else if (referenceText.equalsIgnoreCase("New Game")) {
                 //Send dimensions over to gameboard object based on the levelSelectionCBox choice.
+                gameboard.setRows(userRows);
+                gameboard.setCols(userCols);
+                gameboard.activateCards();
 
             }
 
         }
 
+    }
+
+    private class LevelListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent eventObject) {
+
+            JComboBox referenceCBox = (JComboBox) eventObject.getSource();
+
+            String userOption = (String) referenceCBox.getSelectedItem();
+            if (userOption.equals("Level 1")) {
+                userRows = 2;
+                userCols = 3;
+            } else if (userOption.equals("Level 2")) {
+                userRows = 2;
+                userCols = 4;
+            } else if (userOption.equals("Level 3")) {
+                userRows = 4;
+                userCols = 4;
+            } else if (userOption.equals("Level 4")) {
+                userRows = 4;
+                userCols = 6;
+            } else if (userOption.equals("Level 5")) {
+                userRows = 6;
+                userCols = 6;
+            } else if (userOption.equals("Level 6")) {
+                userRows = 8;
+                userCols = 8;
+            }
+
+        }
     }
 
     /**

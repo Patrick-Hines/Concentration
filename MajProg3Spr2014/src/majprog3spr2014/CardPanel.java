@@ -45,6 +45,25 @@ public class CardPanel extends JPanel {
     //Method to pull in image filepaths based on dimensions
     //shuffle deck
     //Method to switch on the active cards based on dimensions given by GamePanel
+    public void activateCards() {
+
+        //Clear out all cards on the field
+        for (int k = 0; k < 8; k++) {
+            for (int l = 0; l < 8; l++) {
+                cards[k][l].setActive(false);
+                cards[k][l].repaint();
+            }
+        }
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+
+                cards[i][j].setActive(true);
+                cards[i][j].repaint();
+            }
+        }
+    }
+
     //Inner class for panel clicks
     //actionPerformed()
     //Store clicked card reference in cardReference1 if flippedCards = 0, cardReference 2 if flippedCards = 1;
