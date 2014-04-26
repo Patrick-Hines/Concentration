@@ -32,7 +32,7 @@ public class CardPanel extends JPanel {
     Card selectedCard1;
     Card selectedCard2;
 
-    private int flippedCards;
+    private int mouseClicks;
 
     int totalMatched;
     boolean gameOver;
@@ -49,7 +49,7 @@ public class CardPanel extends JPanel {
         rows = cols = 8;
         cards = new Card[rows][cols];
 
-        flippedCards = 0;
+        mouseClicks = 0;
         gameOver = false;
         turns = 0;
 
@@ -265,11 +265,11 @@ public class CardPanel extends JPanel {
             referenceCard.repaint();
 
             //Determine whether this is the first or second flipped card.
-            if (flippedCards == 0) {
+            if (mouseClicks == 0) {
                 selectedCard1 = referenceCard;
-                flippedCards++;
+                mouseClicks++;
 
-            } else if (flippedCards == 1) {
+            } else if (mouseClicks == 1) {
                 selectedCard2 = referenceCard;
 
                 //Create timer
@@ -315,8 +315,8 @@ public class CardPanel extends JPanel {
                     selectedCard2.repaint();
                 }
 
-                //Reset flippedCards
-                flippedCards = 0;
+                //Reset mouseClicks
+                mouseClicks = 0;
             }
             //Reset totalMatched
             totalMatched = 0;
@@ -351,6 +351,11 @@ public class CardPanel extends JPanel {
         secondsTimer.stop();
         minutesTimer.stop();
         hoursTimer.stop();
+    }
+
+    public void resetGameTime() {
+        stopGameTime();
+        gameTimeSeconds = gameTimeMinutes = gameTimeHours = 0;
     }
 
     public boolean isMatchedSet(Card card1, Card card2) {

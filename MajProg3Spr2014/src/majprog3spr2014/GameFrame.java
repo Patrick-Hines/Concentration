@@ -152,7 +152,6 @@ public class GameFrame extends JFrame {
                 loadCardImages();
                 gameboard.activateCards();
 
-
             }
 
         }
