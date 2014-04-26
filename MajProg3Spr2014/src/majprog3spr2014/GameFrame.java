@@ -46,7 +46,7 @@ public class GameFrame extends JFrame {
 
         //Instantiate all components
         turnLbl = new JLabel("Turn: ");
-        turnNumber = new JLabel("0:00:00");
+        turnNumber = new JLabel("2014");
         timeLbl = new JLabel("Current Time:");
         timeNumber = new JLabel("0:00:00");
         fastestTimeLbl = new JLabel("Fastest Time: ");
@@ -64,6 +64,9 @@ public class GameFrame extends JFrame {
 
         newGameBtn = new JButton("New Game");
         closeBtn = new JButton("Close Window");
+
+        newGameBtn.addActionListener(new ButtonListener());
+        closeBtn.addActionListener(new ButtonListener());
 
         //Set appropriate layouts
         turnPnl.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -112,7 +115,7 @@ public class GameFrame extends JFrame {
                 System.exit(0);
 
             } else if (referenceText.equalsIgnoreCase("New Game")) {
-    			//Send dimensions over to gameboard object based on the levelSelectionCBox choice.
+                //Send dimensions over to gameboard object based on the levelSelectionCBox choice.
 
             }
 

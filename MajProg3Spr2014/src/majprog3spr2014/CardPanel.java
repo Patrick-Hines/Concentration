@@ -5,6 +5,7 @@
  */
 package majprog3spr2014;
 
+import java.awt.GridLayout;
 import javax.swing.JPanel;
 
 /**
@@ -13,32 +14,48 @@ import javax.swing.JPanel;
  */
 public class CardPanel extends JPanel {
 
-	//Declare class properties
+    //Declare class properties
+    Card[][] cards;
+    int rows;
+    int cols;
 
-	//Constructor
-		//Instantiate 2D Array to hold 8x8 cards
-		//Display cards to the screen
+    //Constructor
+    public CardPanel() {
+        rows = cols = 8;
+        cards = new Card[rows][cols];
 
-	//Method to pull in image filepaths based on dimensions 
-		//shuffle deck
+        //Load in the card objects
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                cards[i][j] = new Card();
+            }
+        }
 
-	//Method to switch on the active cards based on dimensions given by GamePanel
+        //Display cards to the screen
+        this.setLayout(new GridLayout(8, 8, 1, 1));
 
-	//Inner class for panel clicks
-		//actionPerformed()
-			//Store clicked card reference in cardReference1 if flippedCards = 0, cardReference 2 if flippedCards = 1;
-			//Set flipped to true
-			//Increment flippedCards
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                this.add(cards[i][j]);
+            }
+        }
 
-			//If "flippedCards" = 2, then send both "cardReference" object to compareCards() method.
-				//If compareCards() returns true, mark cardReference1 and 2 as "matched"
+    }
 
-			//If no other cards are "matched = false", then the game is over.
-
-	//Method to check for matched cards
-		//Compare the imagepaths of the cards.
-		//Returns boolean
-
+       //Method to pull in image filepaths based on dimensions
+    //shuffle deck
+    //Method to switch on the active cards based on dimensions given by GamePanel
+    //Inner class for panel clicks
+    //actionPerformed()
+    //Store clicked card reference in cardReference1 if flippedCards = 0, cardReference 2 if flippedCards = 1;
+    //Set flipped to true
+    //Increment flippedCards
+    //If "flippedCards" = 2, then send both "cardReference" object to compareCards() method.
+    //If compareCards() returns true, mark cardReference1 and 2 as "matched"
+    //If no other cards are "matched = false", then the game is over.
+    //Method to check for matched cards
+    //Compare the imagepaths of the cards.
+    //Returns boolean
     /**
      *
      * @param input Simple method to test output during development

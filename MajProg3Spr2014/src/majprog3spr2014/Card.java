@@ -24,9 +24,9 @@ public class Card extends JPanel {
 
     private String imageFilePath;
 
-    JLabel imageLbl;
+    private JLabel imageLbl;
 
-    ImageIcon image;
+    private ImageIcon image;
 
     //Make Constructor
     public Card() {
@@ -45,7 +45,7 @@ public class Card extends JPanel {
         //Check if card is active or not
         if (active) {
             g.setColor(Color.BLUE);
-            g.drawRect(0, 0, 64, 64);
+            g.fillRect(0, 0, 64, 64);
 
             //Check if flipped or not
             if (flipped) {
@@ -58,13 +58,13 @@ public class Card extends JPanel {
                 if (matched) {
                     super.paintComponent(g);
                     g.setColor(Color.GREEN);
-                    g.drawRect(0, 0, 64, 64);
+                    g.fillRect(0, 0, 64, 64);
                 }
             }
 
         } else { //Means that the card is disabled
             g.setColor(Color.GRAY);
-            g.drawRect(0, 0, 64, 64);
+            g.fillRect(0, 0, 64, 64);
         }
 
     }

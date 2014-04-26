@@ -24,7 +24,7 @@ public class MajProg3Spr2014 {
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setLocationRelativeTo(null);
-        window.setSize(750, 500);
+        window.setSize(525, 620);
         window.setVisible(true);
 
     }
