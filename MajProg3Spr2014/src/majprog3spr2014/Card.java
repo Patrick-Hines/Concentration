@@ -48,6 +48,7 @@ public class Card extends JPanel {
 
         //Check if card is active or not
         if (active) {
+
             g.setColor(Color.BLUE);
             g.fillRect(0, 0, 64, 64);
 
@@ -57,13 +58,31 @@ public class Card extends JPanel {
                 //Set the icon to the JLabel
                 super.paintComponent(g);
                 imageLbl.setIcon(image);
+                repaint();
 
                 //Check if matched or not
                 if (matched) {
                     super.paintComponent(g);
-                    g.setColor(Color.GREEN);
+                    g.setColor(Color.BLACK);
+                    imageLbl.setIcon(null);
                     g.fillRect(0, 0, 64, 64);
                 }
+
+            } else {
+
+                imageLbl.setIcon(null);
+
+                if (matched) {
+
+                    g.setColor(Color.BLACK);
+                    imageLbl.setIcon(null);
+                    g.fillRect(0, 0, 64, 64);
+                } else {
+
+                    g.setColor(Color.BLUE);
+                    g.fillRect(0, 0, 64, 64);
+                }
+
             }
 
         } else { //Means that the card is disabled
@@ -71,7 +90,11 @@ public class Card extends JPanel {
             g.fillRect(0, 0, 64, 64);
         }
 
-    } 
+    }
+
+    public void clearCard() {
+        flipped = active = matched = false;
+    }
 
     /**
      *

@@ -131,9 +131,27 @@ public class GameFrame extends JFrame {
                 //Send dimensions over to gameboard object based on the levelSelectionCBox choice.
                 gameboard.setRows(userRows);
                 gameboard.setCols(userCols);
+                loadCardImages();
                 gameboard.activateCards();
 
             }
+
+        }
+
+        public void loadCardImages() {
+
+            int counter = 1;
+
+            String[] images = new String[userRows * userCols];
+
+            //Add image paths to array
+            for (int i = 0; i < (userRows * userCols / 2); i++) {
+                images[i] = "images/" + counter + ".png";
+                images[i + userRows * userCols / 2] = "images/" + counter + ".png";
+                counter++;
+            }
+
+            gameboard.setCardImages(images);
 
         }
 

@@ -6,8 +6,14 @@
 package majprog3spr2014;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Random;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 /**
  *
@@ -26,6 +32,9 @@ public class CardPanel extends JPanel {
     private int flippedCards;
 
     int totalMatched;
+    boolean gameOver;
+
+    Timer timer;
 
     //Constructor
     public CardPanel() {
@@ -35,10 +44,13 @@ public class CardPanel extends JPanel {
         flippedCards = 0;
         gameOver = false;
 
+        timer = new Timer(1000, new TimerListener());
+
         //Load in the card objects
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 cards[i][j] = new Card();
+
             }
         }
 
@@ -88,9 +100,6 @@ public class CardPanel extends JPanel {
                 cards[i][j].repaint();
             }
         }
-
-        //TODO: Create listener for the panel clicks, test with System.out, implement the images
-        //TODO: Then, compare each clicked panel with the system outlined in comments. You're almost done.
     }
 
     //Method to switch on the active cards based on dimensions given by GamePanel
@@ -108,72 +117,121 @@ public class CardPanel extends JPanel {
             for (int j = 0; j < cols; j++) {
 
                 cards[i][j].setActive(true);
+                cards[i][j].addMouseListener(new PanelListener());
                 cards[i][j].repaint();
             }
         }
     }
 
-   //Inner class for panel clicks
+    private class TimerListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent eventObject) {
+
+            selectedCard1.setFlipped(false);
+            selectedCard1.repaint();
+
+            selectedCard2.setFlipped(false);
+            selectedCard2.repaint();
+
+            timer.stop();
+
+        }
+
+    }
+
+    //Inner class for panel clicks
     private class PanelListener implements MouseListener {
 
-    	@Override
-    	public void mouseClicked(ActionEvent eventObject) {
-    		Card referenceCard = (Card) eventObject.getSource();
+        @Override
+        public void mousePressed(MouseEvent eventObject) {
+            test("Hi");
+            Card referenceCard = (Card) eventObject.getSource();
 
-    		//Determine whether this is the first or second flipped card.
-    		if (flippedCards = 0) {
-    			selectedCard1 = referenceCard;
-    			flippedCards++;
+            //Flip the card
+            referenceCard.setFlipped(true);
+            referenceCard.repaint();
 
-    		} else if (flippedCards = 1) {
-    			selectedCard2 = referenceCard;
+            //Determine whether this is the first or second flipped card.
+            if (flippedCards == 0) {
+                selectedCard1 = referenceCard;
+                flippedCards++;
 
-    			//Check for a matched set
-    			if (isMatchedSet(selectedCard1, selectedCard2)) {
-    				selectedCard1.setMatched(true);
-    				selectedCard2.setMatched(true);
+            } else if (flippedCards == 1) {
+                selectedCard2 = referenceCard;
 
-    					//Check if this was the final set.
-    					for (int i = 0; i < rows; i++) {
-    						for (int j = 0; J < cols ;j++ ) {
-    							
-    							if (cards[i][j].isMatched()) {
-    								totalMatched++;
-    							}
+                //Create timer
+                timer.start();
 
-    						}
-    					}
+                //Check for a matched set
+                if (isMatchedSet(selectedCard1, selectedCard2)) {
+                    selectedCard1.setMatched(true);
+                    selectedCard2.setMatched(true);
 
-    					//Declare game over if all cards are matched
-    					if (totalMatched = (rows * cols)) {
-    						gameOver = true;
-    					}
+                    selectedCard1.repaint();
+                    selectedCard2.repaint();
 
-    					if (gameOver) {
-    						JOptionPane.showMessageDialog("You win! Congratulations!");
-    						
-    						//Clear the board
-    						for (int i = 0; i < rows; i++) {
-	    						for (int j = 0; J < cols ;j++ ) {
-	    							
-	    							cards[i][j].setActive(false);
-	    							cards[i][j].repaint();
-	    						}
-	    					}
-    					}
-    			}
+                    //Check if this was the final set.
+                    for (int i = 0; i < rows; i++) {
+                        for (int j = 0; j < cols; j++) {
 
-    			//Reset flippedCards
-    			flippedCards = 0;
-    		}
+                            if (cards[i][j].isMatched()) {
+                                totalMatched++;
+                            }
 
-    		//Reset totalMatched
-    		totalMatched = 0;
+                        }
+                    }
 
-    	}
-    	
+                    //Declare game over if all cards are matched
+                    if (totalMatched == (rows * cols)) {
+                        gameOver = true;
+                    }
+
+                    if (gameOver) {
+                        JOptionPane.showMessageDialog(null, "You win! Congratulations!");
+                        System.exit(0);
+                    }
+                } else {
+                    selectedCard1.setFlipped(true);
+                    selectedCard2.setFlipped(true);
+
+                    selectedCard1.repaint();
+                    selectedCard2.repaint();
+                }
+
+                //Reset flippedCards
+                flippedCards = 0;
+            }
+            //Reset totalMatched
+            totalMatched = 0;
+
+            //Flip the card back over
+//            referenceCard.setFlipped(false);
+//            referenceCard.repaint();
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+
     }
-    
+
+    public boolean isMatchedSet(Card card1, Card card2) {
+        return card1.getPropertyPath().equalsIgnoreCase(card2.getPropertyPath());
+    }
+
     /**
      *
      * @param input Simple method to test output during development
