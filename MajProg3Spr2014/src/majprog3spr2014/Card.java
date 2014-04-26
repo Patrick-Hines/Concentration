@@ -6,6 +6,7 @@
 package majprog3spr2014;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -22,7 +23,7 @@ public class Card extends JPanel {
     private boolean matched;
     private boolean active;
 
-    private String imageFilePath;
+    private String propertyPath;
 
     private JLabel imageLbl;
 
@@ -34,6 +35,9 @@ public class Card extends JPanel {
         flipped = active = matched = false;
 
         imageLbl = new JLabel();
+
+        this.setLayout(new FlowLayout(FlowLayout.CENTER));
+        this.add(imageLbl);
 
     }
 
@@ -67,17 +71,7 @@ public class Card extends JPanel {
             g.fillRect(0, 0, 64, 64);
         }
 
-    }
-
-    /**
-     *
-     * @param filepath Sets the image to the Card object.
-     */
-    public void setImage(String filepath) {
-        image = new ImageIcon(filepath);
-
-    }
-
+    } 
 
     /**
      *
@@ -130,10 +124,19 @@ public class Card extends JPanel {
     }
 
     /**
-     * @return the imageFilePath
+     * @return the propertyPath
      */
-    public String getImageFilePath() {
-        return imageFilePath;
+    public String getPropertyPath() {
+        return propertyPath;
+    }
+
+    /**
+     * @param propertyPath the propertyPath to set
+     */
+    public void setPropertyPath(String propertyPath) {
+        this.propertyPath = propertyPath;
+        image = new ImageIcon(propertyPath);
+        repaint();
     }
 
 }
