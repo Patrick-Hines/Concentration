@@ -36,6 +36,8 @@ public class CardPanel extends JPanel {
 
     Timer timer;
 
+    private int turns;
+
     //Constructor
     public CardPanel() {
         rows = cols = 8;
@@ -43,6 +45,7 @@ public class CardPanel extends JPanel {
 
         flippedCards = 0;
         gameOver = false;
+        turns = 0;
 
         timer = new Timer(1000, new TimerListener());
 
@@ -123,6 +126,20 @@ public class CardPanel extends JPanel {
         }
     }
 
+    /**
+     * @return the turns
+     */
+    public int getTurns() {
+        return turns;
+    }
+
+    /**
+     * @param turns the turns to set
+     */
+    public void setTurns(int turns) {
+        this.turns = turns;
+    }
+
     private class TimerListener implements ActionListener {
 
         @Override
@@ -163,6 +180,9 @@ public class CardPanel extends JPanel {
                 //Create timer
                 timer.start();
 
+                //Indicated a turn has been taken
+                setTurns(getTurns() + 1);
+
                 //Check for a matched set
                 if (isMatchedSet(selectedCard1, selectedCard2)) {
                     selectedCard1.setMatched(true);
@@ -170,6 +190,7 @@ public class CardPanel extends JPanel {
 
                     selectedCard1.repaint();
                     selectedCard2.repaint();
+
 
                     //Check if this was the final set.
                     for (int i = 0; i < rows; i++) {
@@ -205,9 +226,6 @@ public class CardPanel extends JPanel {
             //Reset totalMatched
             totalMatched = 0;
 
-            //Flip the card back over
-//            referenceCard.setFlipped(false);
-//            referenceCard.repaint();
         }
 
         @Override

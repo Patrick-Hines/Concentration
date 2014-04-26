@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 /**
  *
@@ -44,6 +45,7 @@ public class GameFrame extends JFrame {
 
     int userRows;
     int userCols;
+    Timer pingTurn;
 
     public GameFrame() {
 
@@ -51,6 +53,9 @@ public class GameFrame extends JFrame {
         userCols = 3;
 
         //Instantiate all components
+        pingTurn = new Timer(100, new TurnListener());
+        pingTurn.start();
+
         turnLbl = new JLabel("Turn: ");
         turnNumber = new JLabel("2014");
         timeLbl = new JLabel("Current Time:");
@@ -114,7 +119,14 @@ public class GameFrame extends JFrame {
 
     }
 
-    //TODO: Add inner class for button listeners.
+    private class TurnListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent eventObject) {
+            turnNumber.setText(gameboard.getTurns() + "");
+        }
+    }
+
     private class ButtonListener implements ActionListener {
 
         @Override
