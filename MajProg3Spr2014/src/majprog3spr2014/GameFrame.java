@@ -45,7 +45,7 @@ public class GameFrame extends JFrame {
 
     int userRows;
     int userCols;
-    Timer pingTurn;
+    Timer statsRefresh;
 
     public GameFrame() {
 
@@ -53,11 +53,11 @@ public class GameFrame extends JFrame {
         userCols = 3;
 
         //Instantiate all components
-        pingTurn = new Timer(100, new TurnListener());
-        pingTurn.start();
+        statsRefresh = new Timer(100, new StatsRefreshListener());
+        statsRefresh.start();
 
         turnLbl = new JLabel("Turn: ");
-        turnNumber = new JLabel("2014");
+        turnNumber = new JLabel("0");
         timeLbl = new JLabel("Current Time:");
         timeNumber = new JLabel("0:00:00");
         fastestTimeLbl = new JLabel("Fastest Time: ");
@@ -119,11 +119,17 @@ public class GameFrame extends JFrame {
 
     }
 
-    private class TurnListener implements ActionListener {
+    private class StatsRefreshListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent eventObject) {
             turnNumber.setText(gameboard.getTurns() + "");
+            int seconds = gameboard.getGameTimeSeconds();
+            int minutes = gameboard.getGameTimeMinutes();
+            int hours = gameboard.getGameTimeHours();
+
+            timeNumber.setText(hours + ":" + minutes + ":" + seconds);
+
         }
     }
 
@@ -145,6 +151,7 @@ public class GameFrame extends JFrame {
                 gameboard.setCols(userCols);
                 loadCardImages();
                 gameboard.activateCards();
+
 
             }
 

@@ -25,6 +25,9 @@ public class CardPanel extends JPanel {
     private Card[][] cards;
     private int rows;
     private int cols;
+    private int gameTimeSeconds;
+    private int gameTimeMinutes;
+    private int gameTimeHours;
 
     Card selectedCard1;
     Card selectedCard2;
@@ -35,6 +38,9 @@ public class CardPanel extends JPanel {
     boolean gameOver;
 
     Timer timer;
+    Timer secondsTimer;
+    Timer minutesTimer;
+    Timer hoursTimer;
 
     private int turns;
 
@@ -48,6 +54,9 @@ public class CardPanel extends JPanel {
         turns = 0;
 
         timer = new Timer(1000, new TimerListener());
+        secondsTimer = new Timer(1000, new SecondsListener());
+        minutesTimer = new Timer(60000, new MinutesListener());
+        hoursTimer = new Timer(3600000, new HoursListener());
 
         //Load in the card objects
         for (int i = 0; i < rows; i++) {
@@ -140,6 +149,89 @@ public class CardPanel extends JPanel {
         this.turns = turns;
     }
 
+    /**
+     * @return the gameTimeSeconds
+     */
+    public int getGameTimeSeconds() {
+        return gameTimeSeconds;
+    }
+
+    /**
+     * @param gameTimeSeconds the gameTimeSeconds to set
+     */
+    public void setGameTimeSeconds(int gameTimeSeconds) {
+        this.gameTimeSeconds = gameTimeSeconds;
+    }
+
+    /**
+     * @return the gameTimeMinutes
+     */
+    public int getGameTimeMinutes() {
+        return gameTimeMinutes;
+    }
+
+    /**
+     * @param gameTimeMinutes the gameTimeMinutes to set
+     */
+    public void setGameTimeMinutes(int gameTimeMinutes) {
+        this.gameTimeMinutes = gameTimeMinutes;
+    }
+
+    /**
+     * @return the gameTimeHours
+     */
+    public int getGameTimeHours() {
+        return gameTimeHours;
+    }
+
+    /**
+     * @param gameTimeHours the gameTimeHours to set
+     */
+    public void setGameTimeHours(int gameTimeHours) {
+        this.gameTimeHours = gameTimeHours;
+    }
+
+    private class SecondsListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent eventObject) {
+
+            setGameTimeSeconds(getGameTimeSeconds() + 1);
+            if (getGameTimeSeconds() > 60) {
+                setGameTimeMinutes(getGameTimeMinutes() + 1);
+                setGameTimeSeconds(0);
+            }
+
+        }
+
+    }
+
+    private class MinutesListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent eventObject) {
+
+            setGameTimeMinutes(getGameTimeMinutes() + 1);
+            if (getGameTimeMinutes() > 60) {
+                setGameTimeHours(getGameTimeHours() + 1);
+                setGameTimeMinutes(0);
+            }
+
+        }
+
+    }
+
+    private class HoursListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent eventObject) {
+
+            setGameTimeHours(getGameTimeHours() + 1);
+
+        }
+
+    }
+
     private class TimerListener implements ActionListener {
 
         @Override
@@ -162,7 +254,10 @@ public class CardPanel extends JPanel {
 
         @Override
         public void mousePressed(MouseEvent eventObject) {
-            test("Hi");
+
+            //Start the game time
+            startGameTime();
+
             Card referenceCard = (Card) eventObject.getSource();
 
             //Flip the card
@@ -191,7 +286,6 @@ public class CardPanel extends JPanel {
                     selectedCard1.repaint();
                     selectedCard2.repaint();
 
-
                     //Check if this was the final set.
                     for (int i = 0; i < rows; i++) {
                         for (int j = 0; j < cols; j++) {
@@ -209,6 +303,7 @@ public class CardPanel extends JPanel {
                     }
 
                     if (gameOver) {
+                        stopGameTime();
                         JOptionPane.showMessageDialog(null, "You win! Congratulations!");
                         System.exit(0);
                     }
@@ -244,6 +339,18 @@ public class CardPanel extends JPanel {
         public void mouseExited(MouseEvent e) {
         }
 
+    }
+
+    public void startGameTime() {
+        secondsTimer.start();
+        minutesTimer.start();
+        hoursTimer.start();
+    }
+
+    public void stopGameTime() {
+        secondsTimer.stop();
+        minutesTimer.stop();
+        hoursTimer.stop();
     }
 
     public boolean isMatchedSet(Card card1, Card card2) {
